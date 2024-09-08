@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="shortcut icon" href="icons/icon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4285f4" />
+  <meta name="robots" content="index, follow">
+  <meta property="og:image" content="https://netflix-1uh.pages.dev/og.jpg" />
+  <meta name="description"
+    content="Discover and stream your favorite movies and TV shows with NETFLIX KE PITAJI - an open source content search and watch website. Enjoy unlimited access to a vast library of content for free.">
+  <title>NETFLIX KE PITAJI</title>
+  <link rel="preload stylesheet" href="style.min.css" as="style">
+  <link rel="preload stylesheet" href="center-atom.min.css" as="style">
+  <!-- Google tag (gtag.js) -->
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-THTQ9GZQ0J">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-THTQ9GZQ0J');
+  </script>
+  <!-- Serviceworker code for PWA  -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').then(function (registration) {
+          console.log('Service worker registered: ', registration.scope);
+        }).catch(function (error) {
+          console.log('Service worker registration failed: ', error);
+        });
+      });
+    }
+  </script>
+  <script type="text/javascript"
+    src="https://platform-api.sharethis.com/js/sharethis.js#property=64c60eb01734a80012bd61d3&product=video-share-buttons&source=platform"
+    async="async"></script>
+</head>
+
+<body style="background-color: #121212; font-family: 'Poppins', sans-serif; color: #fff; margin: 0; padding: 0;">
+
+  <div class="search-container" style="display: flex; justify-content: center; align-items: center; padding: 10px; position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(26, 26, 26, 0.8); backdrop-filter: blur(10px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <input type="search" id="search-input" placeholder="Search any Movie/Webseries/Anime"
+      style="padding: 0.8rem 1.2rem; border: 2px solid #333; border-radius: 25px; background-color: rgba(26, 26, 26, 0.9); color: #fff; font-size: 1rem; width: 80%; outline: none; transition: all 0.3s ease;">
+    <button id="search-button" style="padding: 0.8rem 1.2rem; border: none; border-radius: 25px; background-color: #ff5a5f; color: #fff; font-size: 1rem; cursor: pointer; margin-left: 10px; transition: background-color 0.3s ease, transform 0.3s ease;"
+      onmouseover="this.style.backgroundColor='#ff3a3f'; this.style.transform='scale(1.05)';"
+      onmouseout="this.style.backgroundColor='#ff5a5f'; this.style.transform='scale(1)';"
+      onmousedown="this.style.backgroundColor='#e63946';"
+      onmouseup="this.style.backgroundColor='#ff3a3f';">
+      Search
+    </button>
+  </div>
+
+  <div style="padding-top: 80px;"> <!-- Add padding-top to avoid overlap -->
+    <center>
+      <div id="video" class="video">
+        <iframe id="iframe" scrolling="no" src="" frameborder="0" webkitallowfullscreen mozallowfullscreen
+          allowfullscreen></iframe>
+        <!-- ShareThis BEGIN -->
+        <div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+        <div id="webSeriesData"></div>
+      </div>
+    </center>
+
+    <div id="results"></div>
+
+    <center style="margin-top: 2vh;">
+      <div class="alwaysVisibleContent" style="
+        max-width: 800px; 
+        margin: 0 auto; 
+        padding: 20px; 
+        background-color: #0535947f; 
+        border-radius: 10px; 
+        border: 1px solid #333; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);">
+
+      <h1 style="
+          color: red; 
+          text-align: center; 
+          margin-bottom: 20px;
+          font-size: 2.5rem;
+          border-bottom: 2px solid red;
+          padding-bottom: 10px;">
+        NETFLIX KE PITAJI
+      </h1>
+
+      <h3 style="
+          color: rgb(55, 255, 255); 
+          text-align: center; 
+          margin-bottom: 20px;
+          font-size: 1.5rem;">
+        Created By Govil Vambhu <br>
+        <a href="https://insta.openinapp.co/ysscs" target="_blank" style="
+            color: rgb(55, 255, 255); 
+            text-decoration: none; 
+            font-size: 1.5rem;">
+          Instagram @heygovil
+        </a>
+      </h3>
+
+      <h3 style="
+          color: red; 
+          text-align: center; 
+          margin-bottom: 20px;
+          font-size: 1.5rem;">
+        Search any Movie/Webseries/Anime
+      </h3>
+
+      <div class="pagelinks" style="
+          text-align: center; 
+          margin-top: 20px;">
+        <a href="/privacy-policy.html" target="_blank" style="
+            color: rgb(255, 105, 180); 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-size: 1rem;">
+          Privacy Policy
+        </a>
+        <a href="/terms-and-conditions.html" target="_blank" style="
+            color: rgb(255, 105, 180); 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-size: 1rem;">
+          Terms And Conditions
+        </a>
+        <a href="https://github.com/heygovil/govil99" target="_blank" style="
+            color: rgb(255, 105, 180); 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-size: 1rem;">
+          Source Code
+        </a>
+        <a href="/contact.html" target="_blank" style="
+            color: rgb(255, 105, 180); 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-size: 1rem;">
+          Contact
+        </a>
+      </div>
+
+      <div class="information1" style="
+        max-width: 800px; 
+        margin: 0 auto; 
+        padding: 20px; 
+        background-color: #1a1a1a; 
+        border-radius: 10px; 
+        border: 1px solid #333; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);">
+
+      <h2 style="text-align: center; color: #ff5a5f; border-bottom: 2px solid #ff5a5f; padding-bottom: 10px;">PROJECT INFORMATION</h2>
+
+      <h3 style="color: #1db954;">Introduction</h3>
+      <p style="color: aliceblue; margin-bottom: 15px;">Netflix ke Pitaji is a one-of-a-kind, open-source project that allows users to search
+        and retrieve data about Movies and Web Shows available on the Internet. This documentation provides a comprehensive overview of the
+        features and functionality of the website, including its data sources, user interface, and community features.
+      </p>
+
+      <h3 style="color: #1db954;">Data Sources</h3>
+      <p style="color: aliceblue; margin-bottom: 15px;">Netflix ke Pitaji retrieves data from two of the largest movie and TV databases on
+        the internet: IMDB (Internet Movie Database) and TMDB (The Movie Database). This combination of data sources provides a comprehensive and
+        up-to-date movie and TV show library, ensuring that users have access to the latest information on their favorite movies and TV shows.
+      </p>
+
+      <h3 style="color: #1db954;">User Interface</h3>
+      <p style="color: aliceblue; margin-bottom: 15px;">The website has a simple and user-friendly interface, making it easy for users to navigate and search for
+        movies and TV shows. The no reload feature of this website makes it very unique and super fast. The page load speed of this website is approximately 0.1 Seconds.
+      </p>
+
+      <h3 style="color: #1db954;">Movie and TV Show Information</h3>
+      <p style="color: aliceblue; margin-bottom: 15px;">The movie and TV show pages on Netflix ke Pitaji provide users with a wealth of information about the movie or
+        TV show. The page includes the poster thumbnail, and information about cast and crew. More information about the Movies and Shows is intentionally not displayed, If you want to display that information then you can modify
+        that in the source code.
+      </p>
+
+      <h3 style="color: #1db954;">Single Page Website</h3>
+      <p style="color: aliceblue; margin-bottom: 15px;">It is important to note that Netflix ke Pitaji is a single page client side website and does not store any
+        information on its servers. All data is retrieved from IMDB and TMDB and is displayed on the website in real-time. Despite of
+        being a single page website the URLs in the address bar are updated and their event is also handled. Means if you
+        enter a URL which contains some data about movies/webseries/search_query the website will load that data same as
+        a normal website with backend does. This means that the website is fast and responsive, providing a seamless user experience for its users.
+      </p>
+
+      <h3 style="color: #1db954;">Source Code</h3>
+      <p style="color: aliceblue; margin-bottom: 15px;">The Source Code of this Tool is available at Github repository by Govil Vambhu. You can access the repository
+        at <a href="https://github.com/heygovil/govil99" target="_blank" style="color: rgb(0, 140, 255); text-decoration: none;">Here(Link to Github Repository)</a>.
+      </p>
+
+      <h3 style="color: #1db954;">Conclusion</h3>
+      <p style="color: aliceblue; margin-bottom: 15px;">In conclusion, Netflix ke Pitaji (Created by Govil Vambhu) is an open-source project that provides a comprehensive movie and TV show
+        library and a unique movie-watching experience. With its simple and user-friendly interface, comprehensive movie
+        and TV show information, and the ability to watch movies and TV shows that are available on the internet for free.
+      </p>
+    </div>
+      <div>
+        <h3>Libraries Used</h3>
+        <div class="footerLinks">
+          <a href="https://embed.smashystream.com/" target="_blank">Smashy Stream</a>
+          <a href="https://codebyzach.github.io/pace/" target="_blank">PACE</a>
+          <a href="https://tmdb.com" target="_blank">TMDB</a>
+          <a href="https://imdb.com" target="_blank">IMDB</a>
+        </div>
+      </div>
+    </center>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+  <script src="script.min.js"></script>
+</body>
+
+</html>
